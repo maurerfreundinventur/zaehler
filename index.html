@@ -4,23 +4,24 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Live-Zähler | Inventur</title>
 <style>
-:root{color-scheme:dark;--bg:#101820;--panel:#1b2835;--line:#354857;--ink:#f2f6f8;--muted:#afc1ce;--green:#60e3a1}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px system-ui,-apple-system,sans-serif}main{max-width:680px;margin:auto;padding:14px 14px calc(22px + env(safe-area-inset-bottom))}h1{font-size:23px;margin:0 0 4px}p{margin:5px 0;line-height:1.4}.muted{color:var(--muted);font-size:13px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:12px;margin:12px 0}.counter{display:flex;align-items:center;justify-content:space-between;gap:10px}.number{font-size:70px;line-height:1;font-weight:750;font-variant-numeric:tabular-nums;color:var(--green)}button{border:1px solid var(--line);background:#293a49;color:var(--ink);font:inherit;font-weight:650;border-radius:10px;padding:12px;min-height:45px;cursor:pointer}button:disabled{opacity:.45;cursor:default}button.primary{background:var(--green);border-color:var(--green);color:#10251b}button.danger{color:#ffb7b7}.adjust{display:flex;gap:8px}.adjust button{font-size:25px;min-width:52px}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}#stage{position:relative;overflow:hidden;background:#080d12;border-radius:12px;aspect-ratio:4/3;isolation:isolate}video{position:absolute;inset:0;width:100%;height:100%;object-fit:fill}#overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}#placeholder{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);text-align:center;padding:22px;pointer-events:none}#placeholder[hidden]{display:none}#status{font-weight:650;margin-top:10px;min-height:24px}#status.ok{color:var(--green)}#status.warn{color:#ffd18b}.meter{height:8px;border-radius:8px;background:#0c141b;overflow:hidden;margin-top:8px}.meter span{display:block;height:100%;background:var(--green);width:0%;transition:width 60ms linear}.setting{display:grid;grid-template-columns:1fr auto;gap:6px;margin:13px 0}.setting input[type=range]{grid-column:1/-1;width:100%;accent-color:var(--green);margin:2px 0}.setting output{font-variant-numeric:tabular-nums;color:var(--green)}summary{font-weight:700;cursor:pointer}label.check{display:flex;align-items:center;gap:8px;margin:14px 0}input[type=checkbox]{accent-color:var(--green);width:20px;height:20px}.flash{outline:3px solid var(--green);outline-offset:-3px}ol{padding-left:21px;margin:8px 0}li{margin:5px 0}#notice{color:#ffd18b;white-space:pre-line} [hidden]{display:none!important}
+:root{color-scheme:dark;--bg:#101820;--panel:#1b2835;--line:#354857;--ink:#f2f6f8;--muted:#afc1ce;--green:#60e3a1}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px system-ui,-apple-system,sans-serif}main{max-width:680px;margin:auto;padding:calc(14px + env(safe-area-inset-top)) 14px calc(22px + env(safe-area-inset-bottom))}h1{font-size:23px;margin:0 0 4px}p{margin:5px 0;line-height:1.4}.muted{color:var(--muted);font-size:13px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:12px;margin:12px 0}.counter{display:flex;align-items:center;justify-content:space-between;gap:10px}.number{font-size:70px;line-height:1;font-weight:750;font-variant-numeric:tabular-nums;color:var(--green)}button{border:1px solid var(--line);background:#293a49;color:var(--ink);font:inherit;font-weight:650;border-radius:10px;padding:12px;min-height:45px;cursor:pointer}button:disabled{opacity:.45;cursor:default}button.primary{background:var(--green);border-color:var(--green);color:#10251b}button.danger{color:#ffb7b7}.adjust{display:flex;gap:8px}.adjust button{font-size:25px;min-width:52px}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}#stage{position:relative;overflow:hidden;background:#080d12;border-radius:12px;aspect-ratio:4/3;isolation:isolate}video{position:absolute;inset:0;width:100%;height:100%;object-fit:fill}#overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}#placeholder{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);text-align:center;padding:22px;pointer-events:none}#placeholder[hidden]{display:none}#status{font-weight:650;margin-top:10px;min-height:24px}#status.ok{color:var(--green)}#status.warn{color:#ffd18b}.meter{height:8px;border-radius:8px;background:#0c141b;overflow:hidden;margin-top:8px}.meter span{display:block;height:100%;background:var(--green);width:0%;transition:width 60ms linear}.setting{display:grid;grid-template-columns:1fr auto;gap:6px;margin:13px 0}.setting input[type=range]{grid-column:1/-1;width:100%;accent-color:var(--green);margin:2px 0}.setting output{font-variant-numeric:tabular-nums;color:var(--green)}summary{font-weight:700;cursor:pointer}label.check{display:flex;align-items:center;gap:8px;margin:14px 0}input[type=checkbox]{accent-color:var(--green);width:20px;height:20px}.flash{outline:3px solid var(--green);outline-offset:-3px}ol{padding-left:21px;margin:8px 0}li{margin:5px 0}#notice{color:#ffd18b;white-space:pre-line} [hidden]{display:none!important}
 </style>
 </head>
 <body><main>
-<h1>Live-Zähler</h1><p class="muted">Inventur · Live-Tracker V3 · Vollbild · Verarbeitung nur auf diesem Gerät</p>
+<h1>Live-Zähler</h1><p class="muted">Inventur · Live-Tracker V4 · Lokale Bewegung · Verarbeitung nur auf diesem Gerät</p>
 <section class="panel counter"><div><div class="muted">GEZÄHLTE STÜCK</div><div id="count" class="number" aria-live="off">0</div></div><div class="adjust"><button id="minus" aria-label="Ein Stück abziehen">−</button><button id="plus" aria-label="Ein Stück hinzufügen">+</button></div></section>
 <section class="panel"><div id="stage"><video id="video" autoplay playsinline muted></video><canvas id="overlay"></canvas><div id="placeholder">Kamera starten, um die Live-Erkennung zu nutzen.</div></div><div id="status" role="status">Kamera aus</div><div class="meter" title="Bewegung im gesamten Kamerabild"><span id="meter"></span></div><div class="muted" id="motion">Bewegung: –</div><p id="notice" class="muted" hidden></p></section>
 <div class="actions"><button class="primary" id="camera">Kamera starten</button><button id="stop" disabled>Kamera aus</button></div>
 <div class="actions" style="margin-top:8px"><button id="cal" disabled>Tracking starten</button></div>
 <div class="actions" style="margin-top:8px"><button id="pause" disabled>Zählung pausieren</button><button id="reset" class="danger">Zähler auf 0</button></div>
 <section class="panel"><details open><summary>Erkennung einstellen</summary>
-<div class="setting"><label for="sensitivity">Empfindlichkeit</label><output id="sensitivityVal">80</output><input id="sensitivity" type="range" min="10" max="100" value="80"></div>
-<div class="setting"><label for="area">Mindestgröße im Kamerabild</label><output id="areaVal">0,1 %</output><input id="area" type="range" min="0.1" max="10" step="0.1" value="0.1"></div>
-<div class="setting"><label for="cooldown">Ruhezeit zum Freigeben des Trackers</label><output id="cooldownVal">240 ms</output><input id="cooldown" type="range" min="60" max="1000" step="20" value="240"></div>
+<div class="setting"><label for="sensitivity">Empfindlichkeit</label><output id="sensitivityVal">75</output><input id="sensitivity" type="range" min="10" max="100" value="75"></div>
+<div class="setting"><label for="area">Mindestgröße im Kamerabild</label><output id="areaVal">0,05 %</output><input id="area" type="range" min="0.05" max="2" step="0.05" value="0.05"></div>
+<div class="setting"><label for="maxBox">Maximale Größe des Tracking-Rahmens</label><output id="maxBoxVal">12 %</output><input id="maxBox" type="range" min="1" max="30" step="1" value="12"></div>
+<div class="setting"><label for="cooldown">Ruhezeit zum Freigeben des Trackers</label><output id="cooldownVal">180 ms</output><input id="cooldown" type="range" min="60" max="1000" step="20" value="180"></div>
 <label class="check"><input id="sound" type="checkbox" checked> Signalton je gezähltem Stück</label>
-<p class="muted">Bei fehlenden Teilen: Empfindlichkeit erhöhen oder Mindestgröße senken. Bei Fehlzählungen umgekehrt. Bei Doppelzählungen Ruhezeit erhöhen; bei verschluckten Einzelteilen Ruhezeit senken. Eine zusammenhängende Bewegung wird als ein Teil gezählt.</p></details></section>
-<section class="panel"><details open><summary>So funktioniert der Test</summary><ol><li>Handy fest aufstellen, so dass die Flugbahn und der Korb sichtbar sind. Hände möglichst außerhalb des Kamerabilds halten.</li><li>Kamera starten. Das gesamte Kamerabild wird automatisch ausgewertet.</li><li>„Tracking starten“ antippen und das Handy ruhig lassen.</li><li>Teile einzeln einwerfen. Ein grüner Rahmen zeigt die erkannte Bewegung und die Tracking-ID. Bereits ruhende Teile dürfen im Bild bleiben.</li><li>Mit zehn Teilen testen, zunächst etwa eine Sekunde Abstand lassen.</li></ol><p class="muted">Experimenteller Bewegungs-Tracker: keine KI-Artikelerkennung. Schatten, Handbewegungen, Kamerawackeln und nachrutschende Teile können Fehlzählungen verursachen. Mehrere gleichzeitig bewegte Teile werden nicht zuverlässig getrennt.</p></details></section>
+<p class="muted">Bei fehlenden Teilen: Empfindlichkeit erhöhen oder Mindestgröße senken. Bei Fehlzählungen umgekehrt. Bei Doppelzählungen Ruhezeit erhöhen; bei verschluckten Einzelteilen Ruhezeit senken. Der Tracker markiert nur kompakte lokale Bewegungen. Bei zu großen Rahmen die maximale Größe senken. Eine zusammenhängende Bewegung wird als ein Teil gezählt.</p></details></section>
+<section class="panel"><details open><summary>So funktioniert der Test</summary><ol><li>Handy fest aufstellen, so dass die Flugbahn und der Korb sichtbar sind. Hände möglichst außerhalb des Kamerabilds halten.</li><li>Kamera starten. Das gesamte Kamerabild wird automatisch ausgewertet.</li><li>„Tracking starten“ antippen und das Handy ruhig lassen.</li><li>Teile einzeln einwerfen. Ein grüner Rahmen zeigt die stärkste kompakte Bewegung und die Ereignis-ID. Bereits ruhende Teile dürfen im Bild bleiben.</li><li>Mit zehn Teilen testen, zunächst etwa eine Sekunde Abstand lassen.</li></ol><p class="muted">Experimenteller Bewegungs-Tracker: keine KI-Artikelerkennung. Schatten, Handbewegungen, Kamerawackeln und nachrutschende Teile können Fehlzählungen verursachen. Mehrere gleichzeitig bewegte Teile werden nicht zuverlässig getrennt.</p></details></section>
 </main><script>
 'use strict';
 const $=id=>document.getElementById(id), v=$('video'), overlay=$('overlay'), ctx=overlay.getContext('2d'), sample=document.createElement('canvas'), sc=sample.getContext('2d',{willReadFrequently:true});
@@ -35,9 +36,9 @@ function beep(){if(!$('sound').checked||!audio||audio.state!=='running')return;t
 function unlockAudio(){try{const AC=window.AudioContext||window.webkitAudioContext;if(AC){if(!audio)audio=new AC();if(audio.state==='suspended')audio.resume().catch(()=>{});}}catch(e){}}
 async function keepAwake(){try{if(stream&&document.visibilityState==='visible'&&navigator.wakeLock&&!wake){wake=await navigator.wakeLock.request('screen');wake.addEventListener('release',()=>{wake=null;});}}catch(e){}}
 function controls(){const on=!!stream;$('camera').disabled=on||busy;$('stop').disabled=!on;$('cal').disabled=!on||calibrating;$('pause').disabled=!on||!calibrated||calibrating;$('pause').textContent=running?'Zählung pausieren':'Zählung fortsetzen';}
-function resize(){if(!v.videoWidth)return;const scale=320/Math.max(v.videoWidth,v.videoHeight),w=Math.max(1,Math.round(v.videoWidth*scale)),h=Math.max(1,Math.round(v.videoHeight*scale));clearTracking();sample.width=w;sample.height=h;overlay.width=v.videoWidth;overlay.height=v.videoHeight;$('stage').style.aspectRatio=`${v.videoWidth}/${v.videoHeight}`; $('stage').style.maxHeight='65svh'; $('stage').style.width=`min(100%, calc(65svh * ${v.videoWidth/v.videoHeight}))`; $('stage').style.marginInline='auto';}
+function resize(){if(!v.videoWidth)return;const scale=320/Math.max(v.videoWidth,v.videoHeight),w=Math.max(1,Math.round(v.videoWidth*scale)),h=Math.max(1,Math.round(v.videoHeight*scale));clearTracking();sample.width=w;sample.height=h;overlay.width=v.videoWidth;overlay.height=v.videoHeight;$('stage').style.aspectRatio=`${v.videoWidth}/${v.videoHeight}`; $('stage').style.maxHeight='55svh'; $('stage').style.width=`min(100%, calc(55svh * ${v.videoWidth/v.videoHeight}))`; $('stage').style.marginInline='auto';}
 function draw(){const w=overlay.width,h=overlay.height;ctx.clearRect(0,0,w,h);if(!stream)return;ctx.font=`bold ${Math.max(14,w/32)}px system-ui`;
-if(track){const b=track.box;ctx.strokeStyle='#60e3a1';ctx.fillStyle='#60e3a1';ctx.lineWidth=Math.max(3,w/170);ctx.strokeRect(b.x*w,b.y*h,b.w*w,b.h*h);ctx.fillText('ID '+track.id+' · +1',b.x*w+4,Math.max(20,b.y*h-8));}
+if(track){const b=track.box;ctx.strokeStyle='#60e3a1';ctx.fillStyle='#60e3a1';ctx.lineWidth=Math.max(3,w/170);ctx.strokeRect(b.x*w,b.y*h,b.w*w,b.h*h);ctx.fillText('ID '+track.id,b.x*w+4,Math.max(20,b.y*h-8));}
 if(performance.now()<flashUntil){ctx.fillStyle='#60e3a1';ctx.font=`bold ${w/9}px system-ui`;ctx.fillText('+1',w*.76,h*.19);}}
 
 async function startCamera(){if(busy||stream)return;unlockAudio();notice();if(!window.isSecureContext||!navigator.mediaDevices?.getUserMedia){notice('Kamera nicht verfügbar: Öffne diese Seite über HTTPS in Safari oder Chrome. Die Datei-Vorschau unterstützt den Kamerazugriff möglicherweise nicht.');status('Kamera nicht verfügbar','warn');return;}busy=true;controls();status('Kamera wird geöffnet …');try{stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720},frameRate:{ideal:30}}});v.srcObject=stream;await v.play();if(!v.videoWidth)await new Promise(resolve=>v.addEventListener('loadedmetadata',resolve,{once:true}));resize();$('placeholder').hidden=true;status('Bereit – Tracking starten');stream.getVideoTracks().forEach(t=>t.addEventListener('ended',()=>{if(stream)stopCamera();}));keepAwake();lastFrame=-1;raf=requestAnimationFrame(loop);}catch(e){if(stream)stream.getTracks().forEach(t=>t.stop());stream=null;v.srcObject=null;notice('Kamerazugriff fehlgeschlagen: '+(e.message||e.name)+'. Prüfe die Kameraberechtigung im Browser und in den Systemeinstellungen.');status('Kamera konnte nicht geöffnet werden','warn');}finally{busy=false;controls();}}
@@ -45,35 +46,51 @@ function stopCamera(){cancelAnimationFrame(raf);const old=stream;stream=null;if(
 function beginCal(){if(!stream)return;unlockAudio();clearTracking();calibrating=false;calibrated=true;running=true;warmUntil=performance.now()+350;status('Tracking startet …','ok');controls();}
 // Difference between consecutive frames. Static parts do not generate motion.
 // One track per continuous motion event; a quiet period separates successive parts.
-function detectMotion(p,prev,w,h,threshold,minFraction){
- const n=w*h, mask=new Uint8Array(n), seen=new Uint8Array(n), queue=new Int32Array(n);
- let changed=0;for(let k=0,i=0;k<n;k++,i+=4){if(Math.max(Math.abs(p[i]-prev[i]),Math.abs(p[i+1]-prev[i+1]),Math.abs(p[i+2]-prev[i+2]))>=threshold){mask[k]=1;changed++;}}
- const fraction=changed/n; if(fraction>.60)return {fraction,box:null,global:true};
- // Connected motion blobs, ignoring isolated pixels. Merge nearby/fragmented motion into one event.
- let blobs=[];const noise=Math.max(4,Math.round(n*.0005));
- for(let k=0;k<n;k++){if(!mask[k]||seen[k])continue;let head=0,tail=1;queue[0]=k;seen[k]=1;let l=w,r=0,t=h,b=0;
- while(head<tail){const i=queue[head++],x=i%w,y=Math.floor(i/w);l=Math.min(l,x);r=Math.max(r,x);t=Math.min(t,y);b=Math.max(b,y);
- for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){if(!dx&&!dy)continue;const xx=x+dx,yy=y+dy;if(xx<0||xx>=w||yy<0||yy>=h)continue;const q=yy*w+xx;if(mask[q]&&!seen[q]){seen[q]=1;queue[tail++]=q;}}}
- if(tail>=noise)blobs.push({l,r,t,b,n:tail});}
- if(!blobs.length)return {fraction,box:null};blobs.sort((a,b)=>b.n-a.n);const main={...blobs[0]};const margin=Math.max(5,Math.round(Math.min(w,h)*.25));
- for(const z of blobs.slice(1)){if(z.l<=main.r+margin&&z.r>=main.l-margin&&z.t<=main.b+margin&&z.b>=main.t-margin){main.l=Math.min(main.l,z.l);main.r=Math.max(main.r,z.r);main.t=Math.min(main.t,z.t);main.b=Math.max(main.b,z.b);main.n+=z.n;}}
- return {fraction,box:main.n>=Math.max(5,n*minFraction)?main:null};
+function detectMotion(p,prev,w,h,threshold,minFraction,maxBoxFraction){
+ const n=w*h, mask=new Uint8Array(n), joined=new Uint8Array(n), seen=new Uint8Array(n), queue=new Int32Array(n);
+ // A frame-wide brightness shift is not a moving object.
+ let delta=0;for(let i=0;i<p.length;i+=16)delta+=(p[i]-prev[i]+p[i+1]-prev[i+1]+p[i+2]-prev[i+2])/3;
+ delta/=Math.ceil(n/4);
+ let changed=0; const tiles=new Uint16Array(24);
+ for(let k=0,i=0;k<n;k++,i+=4){
+  if(Math.max(Math.abs(p[i]-prev[i]-delta),Math.abs(p[i+1]-prev[i+1]-delta),Math.abs(p[i+2]-prev[i+2]-delta))>=threshold){
+   mask[k]=1;changed++;const x=k%w,y=Math.floor(k/w);tiles[Math.floor(y*6/h)*4+Math.floor(x*4/w)]++;
+  }
+ }
+ const fraction=changed/n, spread=tiles.filter(a=>a>n/24*.045).length;
+ if(fraction>.30||(spread>=12&&fraction>.035))return {fraction,box:null,global:true};
+ // Connect only immediately neighbouring pixels (two-pixel gap at most).
+ for(let k=0;k<n;k++)if(mask[k]){const x=k%w,y=Math.floor(k/w);for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const xx=x+dx,yy=y+dy;if(xx>=0&&xx<w&&yy>=0&&yy<h)joined[yy*w+xx]=1;}}
+ const candidates=[];const minPixels=Math.max(8,Math.ceil(n*minFraction));
+ for(let k=0;k<n;k++){
+  if(!joined[k]||seen[k])continue;let head=0,tail=1,real=0,l=w,r=0,t=h,b=0;queue[0]=k;seen[k]=1;
+  while(head<tail){const i=queue[head++],x=i%w,y=Math.floor(i/w);if(mask[i]){real++;l=Math.min(l,x);r=Math.max(r,x);t=Math.min(t,y);b=Math.max(b,y);}
+   for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){if(!dx&&!dy)continue;const xx=x+dx,yy=y+dy;if(xx<0||xx>=w||yy<0||yy>=h)continue;const q=yy*w+xx;if(joined[q]&&!seen[q]){seen[q]=1;queue[tail++]=q;}}
+  }
+  if(real<minPixels)continue;const bw=r-l+1,bh=b-t+1,area=bw*bh;
+  if(area/n>maxBoxFraction||bw>w*.60||bh>h*.60||real/area<.08)continue;
+  candidates.push({l,r,t,b,n:real});
+ }
+ // Do not union unrelated movements across the basket.
+ candidates.sort((a,b)=>b.n-a.n);
+ return {fraction,box:candidates[0]||null,ignored:changed>=minPixels&&!candidates.length};
 }
 function loop(now){if(!stream)return;raf=requestAnimationFrame(loop);if(v.readyState<2||v.currentTime===lastFrame)return;lastFrame=v.currentTime;
  if(!running){draw();return;}const sw=sample.width,sh=sample.height;if(!sw||!sh)return;sc.drawImage(v,0,0,sw,sh);const x=0,y=0,w=sw,h=sh;const p=sc.getImageData(x,y,w,h).data;
  if(!previous||previous.length!==p.length||now<warmUntil){previous=p;draw();return;}
- const threshold=65-Number($('sensitivity').value)*.55,min=Number($('area').value)/100,quiet=Number($('cooldown').value);const result=detectMotion(p,previous,w,h,threshold,min);previous=p;
- $('motion').textContent=`Bewegung: ${(result.fraction*100).toFixed(1).replace('.',',')} % · Tracker: ${track?'ID '+track.id:'frei'}`;$('meter').style.width=Math.min(100,result.fraction/min*50)+'%';
- if(result.global){track=null;lastMotion=now;status('Starke Bildänderung – Kamera ruhig halten','warn');}
- else if(result.box){const b=result.box,box={x:(x+b.l)/sw,y:(y+b.t)/sh,w:(b.r-b.l+1)/sw,h:(b.b-b.t+1)/sh};
+ const threshold=65-Number($('sensitivity').value)*.55,min=Number($('area').value)/100,quiet=Number($('cooldown').value);const result=detectMotion(p,previous,w,h,threshold,min,Number($('maxBox').value)/100);previous=p;
+ $('meter').style.width=Math.min(100,result.fraction/min*50)+'%';
+ if(result.global){track=null;lastMotion=now;status('Großflächige Bewegung ignoriert','warn');}
+ else if(result.box){const b=result.box,box={x:b.l/sw,y:b.t/sh,w:(b.r-b.l+1)/sw,h:(b.b-b.t+1)/sh};
  if(track&&now-lastMotion>=quiet)track=null;
  if(!track&&now-lastMotion>=quiet){track={id:nextId++,box};setCount(count+1);flashUntil=now+220;beep();status('Teil erkannt · ID '+track.id+' · +1','ok');}
- else if(track){track.box=box;status('Verfolge Teil · ID '+track.id,'ok');}lastMotion=now;
- }else if(now-lastMotion>=quiet){track=null;status('Tracking aktiv – bereit für nächstes Teil','ok');}
+ else if(track){track.box=box;status('Verfolge Bewegung · ID '+track.id,'ok');}lastMotion=now;
+ }else if(now-lastMotion>=quiet){track=null;status(result.ignored?'Unpassende Bewegung ignoriert – bereit':'Tracking aktiv – bereit für nächstes Teil','ok');}
+ $('motion').textContent=`Bewegung: ${(result.fraction*100).toFixed(1).replace('.',',')} % · Tracker: ${track?'ID '+track.id:'frei'}`;
  draw();$('stage').classList.toggle('flash',now<flashUntil);
 }
 $('pause').onclick=()=>{unlockAudio();running=!running;clearTracking();if(running)warmUntil=performance.now()+350;status(running?'Tracking aktiv':'Zählung pausiert',running?'ok':'');controls();};
-$('camera').onclick=startCamera;$('stop').onclick=stopCamera;$('cal').onclick=beginCal;$('minus').onclick=()=>setCount(count-1);$('plus').onclick=()=>setCount(count+1);$('reset').onclick=()=>{if(count===0||confirm('Stückzahl wirklich auf 0 setzen?'))setCount(0);};
-for(const [id,fmt] of [['sensitivity',v=>v],['area',v=>Number(v).toFixed(1).replace('.',',')+' %'],['cooldown',v=>v+' ms']]){$(id).oninput=()=>$(id+'Val').textContent=fmt($(id).value);}
+$('camera').onclick=startCamera;$('stop').onclick=stopCamera;$('cal').onclick=beginCal;$('minus').onclick=()=>setCount(count-1);$('plus').onclick=()=>setCount(count+1);$('reset').onclick=()=>{if(count===0||confirm('Stückzahl wirklich auf 0 setzen?')){setCount(0);nextId=1;clearTracking();warmUntil=performance.now()+350;status(running?'Tracking aktiv – bereit':'Zähler zurückgesetzt',running?'ok':'');draw();}};
+for(const [id,fmt] of [['sensitivity',v=>v],['area',v=>Number(v).toFixed(2).replace('.',',')+' %'],['maxBox',v=>v+' %'],['cooldown',v=>v+' ms']]){$(id).oninput=()=>$(id+'Val').textContent=fmt($(id).value);}
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&running){running=false;calibrated=false;clearTracking();status('Nach Rückkehr bitte Tracking neu starten','warn');controls();}else if(!document.hidden)keepAwake();});window.addEventListener('pagehide',stopCamera);controls();
 </script></body></html>
