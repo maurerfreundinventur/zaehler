@@ -9,9 +9,9 @@
 </style>
 </head>
 <body><main>
-<h1>Live-Zähler</h1><p class="muted">Inventur · Live-Tracker V7 · Ohne KI · Bewegungsfilter · Lokal auf diesem Gerät</p>
+<h1>Live-Zähler</h1><p class="muted">Inventur · Live-Tracker V7.1 · Ohne KI · Bewegungsfilter · Lokal auf diesem Gerät</p>
 <section class="panel counter"><div><div class="muted">GEZÄHLTE STÜCK</div><div id="count" class="number" aria-live="off">0</div></div><div class="adjust"><button id="minus" aria-label="Ein Stück abziehen">−</button><button id="plus" aria-label="Ein Stück hinzufügen">+</button></div></section>
-<section class="panel"><div id="stage"><video id="video" autoplay playsinline muted></video><canvas id="overlay"></canvas><div id="placeholder">Kamera starten, um die Live-Erkennung zu nutzen.</div></div><div id="status" role="status">Kamera aus</div><div class="meter" title="Bewegung im aktiven Zählbereich"><span id="meter"></span></div><div class="muted" id="motion">Bewegung: –</div><p id="notice" class="muted" hidden></p></section>
+<section class="panel"><div id="stage"><video id="video" autoplay playsinline muted></video><canvas id="overlay"></canvas><div id="placeholder">Kamera starten, um die Live-Erkennung zu nutzen.</div></div><div id="status" role="status">Kamera aus</div><div class="meter" title="Bewegung im aktiven Zählbereich"><span id="meter"></span></div><div class="muted" id="motion">Bewegung: –</div><p id="eventInfo" class="muted">Letzte Bewegung: –</p><p id="notice" class="muted" hidden></p></section>
 <div class="actions"><button class="primary" id="camera">Kamera starten</button><button id="stop" disabled>Kamera aus</button></div>
 <div class="actions" style="margin-top:8px"><button id="editRoi" disabled>Zählbereich ändern</button><button id="editMask" disabled>Ausschlussfläche hinzufügen</button></div>
 <div class="actions" style="margin-top:8px"><button id="clearMasks" disabled>Ausschlussflächen löschen</button><button id="fullRoi" disabled>Ganzes Bild</button></div>
@@ -21,12 +21,12 @@
 <section class="panel"><details open><summary>Erkennung einstellen</summary>
 <div class="setting"><label for="sensitivity">Empfindlichkeit</label><output id="sensitivityVal">75</output><input id="sensitivity" type="range" min="10" max="100" value="75"></div>
 <div class="setting"><label for="area">Mindestgröße im aktiven Bereich</label><output id="areaVal">0,10 %</output><input id="area" type="range" min="0.05" max="2" step="0.05" value="0.10"></div>
-<div class="setting"><label for="maxBox">Maximale Rahmengröße (bezogen auf Zählbereich)</label><output id="maxBoxVal">10 %</output><input id="maxBox" type="range" min="1" max="60" step="1" value="10"></div>
+<div class="setting"><label for="maxBox">Maximale Rahmengröße (bezogen auf Zählbereich)</label><output id="maxBoxVal">18 %</output><input id="maxBox" type="range" min="1" max="60" step="1" value="18"></div>
 <div class="setting"><label for="cooldown">Ruhezeit zum Freigeben des Trackers</label><output id="cooldownVal">180 ms</output><input id="cooldown" type="range" min="60" max="1000" step="20" value="180"></div>
-<div class="setting"><label for="maxMotion">Maximal bewegte Fläche</label><output id="maxMotionVal">12 %</output><input id="maxMotion" type="range" min="3" max="30" step="1" value="12"></div>
-<div class="setting"><label for="maxTime">Maximale Bewegungsdauer</label><output id="maxTimeVal">800 ms</output><input id="maxTime" type="range" min="200" max="2000" step="50" value="800"></div>
+<div class="setting"><label for="maxMotion">Maximal bewegte Fläche</label><output id="maxMotionVal">18 %</output><input id="maxMotion" type="range" min="3" max="40" step="1" value="18"></div>
+<div class="setting"><label for="maxTime">Maximale Bewegungsdauer</label><output id="maxTimeVal">1500 ms</output><input id="maxTime" type="range" min="200" max="3000" step="50" value="1500"></div>
 <label class="check"><input id="sound" type="checkbox" checked> Signalton je gezähltem Stück</label>
-<p class="muted">Bei fehlenden Teilen: Empfindlichkeit erhöhen oder Mindestgröße senken. Bei Fehlzählungen umgekehrt. Bei Doppelzählungen Ruhezeit erhöhen; bei verschluckten Einzelteilen Ruhezeit senken. Bei Händen oder Füßen die maximale Rahmengröße, bewegte Fläche oder Bewegungsdauer senken. Eine kurze, kompakte Bewegung wird nach der Ruhezeit als ein Teil gezählt. Große oder lange Bewegungen werden vollständig verworfen.</p></details></section>
+<p class="muted">Bei fehlenden Teilen: Empfindlichkeit erhöhen oder Mindestgröße senken. Bei Fehlzählungen umgekehrt. Bei Doppelzählungen Ruhezeit erhöhen; bei verschluckten Einzelteilen Ruhezeit senken. Bei Händen oder Füßen die maximale Rahmengröße, bewegte Fläche oder Bewegungsdauer senken. Eine kurze, kompakte Bewegung wird nach der Ruhezeit als ein Teil gezählt. Ein einzelner zu großer lokaler Rahmen wird toleriert, sofern ein kompakter Kandidat erkannt wurde. Wiederholt große, großflächige oder lange Bewegungen werden verworfen. Der Ablehnungsgrund und die Messwerte bleiben sichtbar.</p></details></section>
 <section class="panel"><details open><summary>So funktioniert der Test</summary><ol><li>Handy fest aufstellen, so dass die Flugbahn und der Korb sichtbar sind. Hände möglichst außerhalb des Kamerabilds halten.</li><li>Kamera starten. Mit „Zählbereich ändern“ ein Rechteck über die Flugbahn ziehen. Bei Bedarf rote Ausschlussflächen über Hand- oder Fußbereiche ziehen. Danach Tracking starten.</li><li>„Tracking starten“ antippen und das Handy ruhig lassen.</li><li>Teile einzeln einwerfen. Ein gelber Rahmen zeigt eine laufende Prüfung, rot eine verworfene Bewegung. Grün und +1 erscheinen erst nach erfolgreicher Prüfung. Bereits ruhende Teile dürfen im Bild bleiben.</li><li>Mit zehn Teilen testen, zunächst etwa eine Sekunde Abstand lassen.</li></ol><p class="muted">Experimenteller Bewegungs-Tracker: keine KI-Artikelerkennung. Schatten, Handbewegungen im aktiven Bereich, Kamerawackeln und nachrutschende Teile können Fehlzählungen verursachen. Rote Flächen werden ignoriert; Hände und Füße werden nur anhand von Größe, Dauer und Position gefiltert, nicht als solche erkannt. Auch Bauteile innerhalb roter Flächen werden ignoriert. Mehrere gleichzeitig bewegte Teile werden nicht zuverlässig getrennt.</p></details></section>
 </main><script>
 'use strict';
@@ -37,7 +37,7 @@ let roi={x:.16,y:.18,w:.68,h:.64}, masks=[], editing='', drag=null, draft=null, 
 function invalidateZone(){maskCache=null;clearTracking();}
 function regionInfo(sw,sh){const x=Math.floor(roi.x*sw),y=Math.floor(roi.y*sh),w=Math.max(1,Math.min(sw-x,Math.round(roi.w*sw))),h=Math.max(1,Math.min(sh-y,Math.round(roi.h*sh)));const key=[sw,sh,x,y,w,h].join(':');if(maskCache?.key===key)return maskCache;const allowed=new Uint8Array(w*h);let valid=0;for(let j=0;j<h;j++)for(let i=0;i<w;i++){const nx=(x+i+.5)/sw,ny=(y+j+.5)/sh;if(!masks.some(m=>nx>=m.x&&nx<m.x+m.w&&ny>=m.y&&ny<m.y+m.h)){allowed[j*w+i]=1;valid++;}}return maskCache={key,x,y,w,h,allowed,valid};}
 function zoneHint(t){$('zoneHint').textContent=t||`Gelb: Zählbereich · Rot: ignoriert (${masks.length}/6).`;}
-function clearTracking(){previous=null;event=null;track=null;occupied=false;lastMotion=-Infinity;flashUntil=0;warmUntil=0;}
+function clearTracking(){$('eventInfo').textContent='Letzte Bewegung: –';previous=null;event=null;track=null;occupied=false;lastMotion=-Infinity;flashUntil=0;warmUntil=0;}
 
 function status(s,cls=''){ $('status').textContent=s;$('status').className=cls; }
 function notice(s=''){ $('notice').textContent=s;$('notice').hidden=!s; }
@@ -72,23 +72,31 @@ function detectMotion(p,prev,w,h,threshold,minFraction,maxBoxFraction,allowed=nu
   }
  }
  const fraction=changed/valid, spread=tiles.filter(a=>a>n/24*.045).length;
- if(fraction>maxMotion||(spread>=12&&fraction>.035))return {fraction,box:null,global:true,active:true};
+ if(fraction>maxMotion||(spread>=16&&fraction>.06))return {fraction,box:null,global:true,active:true};
  // Connect only immediately neighbouring pixels (two-pixel gap at most).
  for(let k=0;k<n;k++)if(mask[k]){const x=k%w,y=Math.floor(k/w);for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const xx=x+dx,yy=y+dy;if(xx>=0&&xx<w&&yy>=0&&yy<h&&(!allowed||allowed[yy*w+xx]))joined[yy*w+xx]=1;}}
- const candidates=[];let oversized=false;const minPixels=Math.max(8,Math.ceil(valid*minFraction));
+ const candidates=[];let oversized=false,largest=0;const minPixels=Math.max(8,Math.ceil(valid*minFraction));
  for(let k=0;k<n;k++){
   if(!joined[k]||seen[k])continue;let head=0,tail=1,real=0,l=w,r=0,t=h,b=0;queue[0]=k;seen[k]=1;
   while(head<tail){const i=queue[head++],x=i%w,y=Math.floor(i/w);if(mask[i]){real++;l=Math.min(l,x);r=Math.max(r,x);t=Math.min(t,y);b=Math.max(b,y);}
    for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){if(!dx&&!dy)continue;const xx=x+dx,yy=y+dy;if(xx<0||xx>=w||yy<0||yy>=h)continue;const q=yy*w+xx;if(joined[q]&&!seen[q]){seen[q]=1;queue[tail++]=q;}}
   }
   if(real<minPixels)continue;const bw=r-l+1,bh=b-t+1,area=bw*bh;
-  if(area/n>maxBoxFraction||bw>w*.60||bh>h*.60){oversized=true;continue;}if(real/area<.08)continue;
+  if(real/area<.08)continue;largest=Math.max(largest,area/n);if(area/n>maxBoxFraction||bw>w*.75||bh>h*.75){oversized=true;continue;}
   candidates.push({l,r,t,b,n:real});
  }
  // Do not union unrelated movements across the basket.
  candidates.sort((a,b)=>b.n-a.n);
- return {fraction,box:candidates[0]||null,oversized,active:changed>=minPixels,ignored:changed>=minPixels&&!candidates.length};
+ return {fraction,box:candidates[0]||null,oversized,largest,active:!!candidates.length||oversized,ignored:changed>=minPixels&&!candidates.length};
 }
+// A single oversized local frame can be a bouncing part. Persistent oversized or global movement is rejected.
+function updateFilters(e,r,now,maxTime){
+ if(r.global)e.reasons.add('großflächige Bewegung');
+ if(r.oversized){e.badFrames++;e.maxBadFrames=Math.max(e.maxBadFrames,e.badFrames);}else e.badFrames=0;
+ if(e.maxBadFrames>=2)e.reasons.add('Rahmen zu groß');
+ if(now-e.start>maxTime)e.reasons.add('Dauer zu lang');
+}
+function eventSummary(e){return `Letzte Bewegung: ${Math.round(e.last-e.start)} ms · max. Fläche ${(e.peak*100).toFixed(1)} % · max. Rahmen ${(e.largest*100).toFixed(1)} % · große Bilder in Folge ${e.maxBadFrames}`;}
 function loop(now){if(!stream)return;raf=requestAnimationFrame(loop);if(v.readyState<2||v.currentTime===lastFrame)return;lastFrame=v.currentTime;
  if(!running){draw();return;}const sw=sample.width,sh=sample.height;if(!sw||!sh)return;sc.drawImage(v,0,0,sw,sh);const {x,y,w,h,allowed}=regionInfo(sw,sh);const p=sc.getImageData(x,y,w,h).data;
  if(!previous||previous.length!==p.length||now<warmUntil){previous=p;draw();return;}
@@ -96,18 +104,22 @@ function loop(now){if(!stream)return;raf=requestAnimationFrame(loop);if(v.readyS
  $('meter').style.width=Math.min(100,result.fraction/Math.max(min,.0001)*50)+'%';
  const active=result.active||result.global||result.oversized;
  if(active){
-   if(!event){event={id:nextId++,start:now,last:now,seen:false,rejected:false,box:null};track=null;}
-   event.last=now;
+   if(!event){event={id:nextId++,start:now,last:now,seen:false,reasons:new Set(),box:null,peak:0,largest:0,badFrames:0,maxBadFrames:0};track=null;}
+   event.last=now;event.peak=Math.max(event.peak,result.fraction);event.largest=Math.max(event.largest,result.largest||0);
    if(result.box){const b=result.box;event.seen=true;event.box={x:(x+b.l)/sw,y:(y+b.t)/sh,w:(b.r-b.l+1)/sw,h:(b.b-b.t+1)/sh};}
-   if(result.global||result.oversized||now-event.start>maxTime)event.rejected=true;
-   if(event.box)track={id:event.id,box:event.box,rejected:event.rejected,confirmed:false};
-   status(event.rejected?'Zu große/lange Bewegung – wird ignoriert':'Bewegung wird geprüft …',event.rejected?'warn':'');
+   updateFilters(event,result,now,maxTime);
+   const rejected=event.reasons.size>0;
+   if(event.box)track={id:event.id,box:event.box,rejected,confirmed:false};
+   status(rejected?'Ignoriert: '+[...event.reasons].join(' / '):'Bewegung wird geprüft …',rejected?'warn':'');
+   $('eventInfo').textContent=eventSummary(event);
  }else if(event&&now-event.last>=quiet){
-   if(event.seen&&!event.rejected){setCount(count+1);flashUntil=now+300;beep();track={id:event.id,box:event.box,confirmed:true};status('Teil erkannt · +1','ok');}
-   else{track=null;status('Bewegung ignoriert – bereit','warn');}
+   const rejected=event.reasons.size>0;
+   if(event.seen&&!rejected){setCount(count+1);flashUntil=now+300;beep();track={id:event.id,box:event.box,confirmed:true};status('Teil erkannt · +1','ok');}
+   else{track=null;status('Ignoriert: '+([...event.reasons].join(' / ')||'kein kompakter Kandidat'),'warn');}
+   $('eventInfo').textContent=eventSummary(event)+(event.seen&&!rejected?' · Gezählt':' · Nicht gezählt');
    event=null;
  }else if(!event&&now>=flashUntil){track=null;}
- $('motion').textContent=`Bewegung: ${(result.fraction*100).toFixed(1).replace('.',',')} % · ${event?(event.rejected?'verworfen':'Prüfung läuft'):'bereit'}`;
+ $('motion').textContent=`Bewegung: ${(result.fraction*100).toFixed(2).replace('.',',')} % · ${event?(event.reasons.size?'verworfen':'Prüfung läuft'):'bereit'}`;
  draw();$('stage').classList.toggle('flash',now<flashUntil);
 }
 
