@@ -9,9 +9,9 @@
 </style>
 </head>
 <body><main>
-<h1>Live-Zähler</h1><p class="muted">Inventur · Live-Tracker V7.1 · Ohne KI · Bewegungsfilter · Lokal auf diesem Gerät</p>
+<h1>Live-Zähler</h1><p class="muted">Inventur · Live-Tracker V7.2 · Ohne KI · Bestandsschutz · Lokal auf diesem Gerät</p>
 <section class="panel counter"><div><div class="muted">GEZÄHLTE STÜCK</div><div id="count" class="number" aria-live="off">0</div></div><div class="adjust"><button id="minus" aria-label="Ein Stück abziehen">−</button><button id="plus" aria-label="Ein Stück hinzufügen">+</button></div></section>
-<section class="panel"><div id="stage"><video id="video" autoplay playsinline muted></video><canvas id="overlay"></canvas><div id="placeholder">Kamera starten, um die Live-Erkennung zu nutzen.</div></div><div id="status" role="status">Kamera aus</div><div class="meter" title="Bewegung im aktiven Zählbereich"><span id="meter"></span></div><div class="muted" id="motion">Bewegung: –</div><p id="eventInfo" class="muted">Letzte Bewegung: –</p><p id="notice" class="muted" hidden></p></section>
+<section class="panel"><div id="stage"><video id="video" autoplay playsinline muted></video><canvas id="overlay"></canvas><div id="placeholder">Kamera starten, um die Live-Erkennung zu nutzen.</div></div><div id="status" role="status">Kamera aus</div><div class="meter" title="Bewegung im aktiven Zählbereich"><span id="meter"></span></div><div class="muted" id="motion">Bewegung: –</div><p id="eventInfo" class="muted">Letzte Bewegung: –</p><p id="stockInfo" class="muted">Holzbestand im Bild: –</p><p id="notice" class="muted" hidden></p></section>
 <div class="actions"><button class="primary" id="camera">Kamera starten</button><button id="stop" disabled>Kamera aus</button></div>
 <div class="actions" style="margin-top:8px"><button id="editRoi" disabled>Zählbereich ändern</button><button id="editMask" disabled>Ausschlussfläche hinzufügen</button></div>
 <div class="actions" style="margin-top:8px"><button id="clearMasks" disabled>Ausschlussflächen löschen</button><button id="fullRoi" disabled>Ganzes Bild</button></div>
@@ -25,19 +25,23 @@
 <div class="setting"><label for="cooldown">Ruhezeit zum Freigeben des Trackers</label><output id="cooldownVal">180 ms</output><input id="cooldown" type="range" min="60" max="1000" step="20" value="180"></div>
 <div class="setting"><label for="maxMotion">Maximal bewegte Fläche</label><output id="maxMotionVal">18 %</output><input id="maxMotion" type="range" min="3" max="40" step="1" value="18"></div>
 <div class="setting"><label for="maxTime">Maximale Bewegungsdauer</label><output id="maxTimeVal">1500 ms</output><input id="maxTime" type="range" min="200" max="3000" step="50" value="1500"></div>
+<label class="check"><input id="stockGuard" type="checkbox" checked> Bestandsschutz gegen Doppelzählungen</label>
+<div class="setting"><label for="woodGain">Mindestzuwachs Holzfläche</label><output id="woodGainVal">0,35 %</output><input id="woodGain" type="range" min="0.10" max="2.00" step="0.05" value="0.35"></div>
+<label class="check"><input id="showWood" type="checkbox" checked> Ruhende Holz-Kandidaten markieren (blau)</label>
+<p class="muted">Vergleicht die sichtbare gelb-braune Holzfläche vor und nach jeder Bewegung. Nur bei ausreichendem Nettozuwachs wird gezählt. Bei überlappenden Griffen, Schatten oder ähnlichen Farben sind Fehlzählungen möglich. Blau markiert Farbkandidaten, keine eindeutigen Objekt-IDs.</p>
 <label class="check"><input id="sound" type="checkbox" checked> Signalton je gezähltem Stück</label>
-<p class="muted">Bei fehlenden Teilen: Empfindlichkeit erhöhen oder Mindestgröße senken. Bei Fehlzählungen umgekehrt. Bei Doppelzählungen Ruhezeit erhöhen; bei verschluckten Einzelteilen Ruhezeit senken. Bei Händen oder Füßen die maximale Rahmengröße, bewegte Fläche oder Bewegungsdauer senken. Eine kurze, kompakte Bewegung wird nach der Ruhezeit als ein Teil gezählt. Ein einzelner zu großer lokaler Rahmen wird toleriert, sofern ein kompakter Kandidat erkannt wurde. Wiederholt große, großflächige oder lange Bewegungen werden verworfen. Der Ablehnungsgrund und die Messwerte bleiben sichtbar.</p></details></section>
-<section class="panel"><details open><summary>So funktioniert der Test</summary><ol><li>Handy fest aufstellen, so dass die Flugbahn und der Korb sichtbar sind. Hände möglichst außerhalb des Kamerabilds halten.</li><li>Kamera starten. Mit „Zählbereich ändern“ ein Rechteck über die Flugbahn ziehen. Bei Bedarf rote Ausschlussflächen über Hand- oder Fußbereiche ziehen. Danach Tracking starten.</li><li>„Tracking starten“ antippen und das Handy ruhig lassen.</li><li>Teile einzeln einwerfen. Ein gelber Rahmen zeigt eine laufende Prüfung, rot eine verworfene Bewegung. Grün und +1 erscheinen erst nach erfolgreicher Prüfung. Bereits ruhende Teile dürfen im Bild bleiben.</li><li>Mit zehn Teilen testen, zunächst etwa eine Sekunde Abstand lassen.</li></ol><p class="muted">Experimenteller Bewegungs-Tracker: keine KI-Artikelerkennung. Schatten, Handbewegungen im aktiven Bereich, Kamerawackeln und nachrutschende Teile können Fehlzählungen verursachen. Rote Flächen werden ignoriert; Hände und Füße werden nur anhand von Größe, Dauer und Position gefiltert, nicht als solche erkannt. Auch Bauteile innerhalb roter Flächen werden ignoriert. Mehrere gleichzeitig bewegte Teile werden nicht zuverlässig getrennt.</p></details></section>
+<p class="muted">Bei fehlenden Teilen: Empfindlichkeit erhöhen oder Mindestgröße senken. Bei Fehlzählungen umgekehrt. Bei Doppelzählungen Mindestzuwachs Holzfläche oder Ruhezeit erhöhen; bei verschluckten Einzelteilen Ruhezeit senken. Bei Händen oder Füßen die maximale Rahmengröße, bewegte Fläche oder Bewegungsdauer senken. Eine kurze, kompakte Bewegung wird nach der Ruhezeit als ein Teil gezählt. Ein einzelner zu großer lokaler Rahmen wird toleriert, sofern ein kompakter Kandidat erkannt wurde. Wiederholt große, großflächige oder lange Bewegungen werden verworfen. Der Ablehnungsgrund und die Messwerte bleiben sichtbar.</p></details></section>
+<section class="panel"><details open><summary>So funktioniert der Test</summary><ol><li>Handy fest aufstellen, so dass die Flugbahn und der Korb sichtbar sind. Hände möglichst außerhalb des Kamerabilds halten.</li><li>Kamera starten. Mit „Zählbereich ändern“ ein Rechteck über die Flugbahn ziehen. Bei Bedarf rote Ausschlussflächen über Hand- oder Fußbereiche ziehen. Danach Tracking starten.</li><li>„Tracking starten“ antippen und das Handy ruhig lassen.</li><li>Teile einzeln einwerfen. Ein gelber Rahmen zeigt eine laufende Prüfung, rot eine verworfene Bewegung. Grün und +1 erscheinen erst nach erfolgreicher Prüfung. Bereits ruhende Teile dürfen im Bild bleiben. Der Bestandsschutz prüft den Nettozuwachs sichtbarer Holzfarbe; blaue Rahmen zeigen Farbkandidaten.</li><li>Mit zehn Teilen testen, zunächst etwa eine Sekunde Abstand lassen.</li></ol><p class="muted">Experimenteller Bewegungs-Tracker: keine KI-Artikelerkennung. Schatten, Handbewegungen im aktiven Bereich, Kamerawackeln, Überdeckung und nachrutschende Teile können Fehlzählungen verursachen. Der Bestandsschutz kann auch neue Griffe übersehen, wenn sie vorhandene verdecken. Rote Flächen werden ignoriert; Hände und Füße werden nur anhand von Größe, Dauer und Position gefiltert, nicht als solche erkannt. Auch Bauteile innerhalb roter Flächen werden ignoriert. Mehrere gleichzeitig bewegte Teile werden nicht zuverlässig getrennt.</p></details></section>
 </main><script>
 'use strict';
 const $=id=>document.getElementById(id), v=$('video'), overlay=$('overlay'), ctx=overlay.getContext('2d'), sample=document.createElement('canvas'), sc=sample.getContext('2d',{willReadFrequently:true});
 let stream=null, running=false, calibrated=false, count=0, raf=0, calibrating=false, occupied=false, flashUntil=0, lastFrame=-1, audio=null, wake=null, busy=false;
-let previous=null, event=null, track=null, nextId=1, lastMotion=-Infinity, warmUntil=0;
+let stock=null, stockBoxes=[], previous=null, event=null, track=null, nextId=1, lastMotion=-Infinity, warmUntil=0;
 let roi={x:.16,y:.18,w:.68,h:.64}, masks=[], editing='', drag=null, draft=null, activePointer=null, maskCache=null;
 function invalidateZone(){maskCache=null;clearTracking();}
 function regionInfo(sw,sh){const x=Math.floor(roi.x*sw),y=Math.floor(roi.y*sh),w=Math.max(1,Math.min(sw-x,Math.round(roi.w*sw))),h=Math.max(1,Math.min(sh-y,Math.round(roi.h*sh)));const key=[sw,sh,x,y,w,h].join(':');if(maskCache?.key===key)return maskCache;const allowed=new Uint8Array(w*h);let valid=0;for(let j=0;j<h;j++)for(let i=0;i<w;i++){const nx=(x+i+.5)/sw,ny=(y+j+.5)/sh;if(!masks.some(m=>nx>=m.x&&nx<m.x+m.w&&ny>=m.y&&ny<m.y+m.h)){allowed[j*w+i]=1;valid++;}}return maskCache={key,x,y,w,h,allowed,valid};}
 function zoneHint(t){$('zoneHint').textContent=t||`Gelb: Zählbereich · Rot: ignoriert (${masks.length}/6).`;}
-function clearTracking(){$('eventInfo').textContent='Letzte Bewegung: –';previous=null;event=null;track=null;occupied=false;lastMotion=-Infinity;flashUntil=0;warmUntil=0;}
+function clearTracking(){$('eventInfo').textContent='Letzte Bewegung: –';previous=null;event=null;track=null;stock=null;stockBoxes=[];$('stockInfo').textContent='Holzbestand im Bild: –';occupied=false;lastMotion=-Infinity;flashUntil=0;warmUntil=0;}
 
 function status(s,cls=''){ $('status').textContent=s;$('status').className=cls; }
 function notice(s=''){ $('notice').textContent=s;$('notice').hidden=!s; }
@@ -52,6 +56,7 @@ const r=editing==='roi'&&draft?draft:roi, x=r.x*w,y=r.y*h,rw=r.w*w,rh=r.h*h;
 ctx.fillStyle='rgba(0,0,0,.32)';ctx.fillRect(0,0,w,y);ctx.fillRect(0,y+rh,w,h-y-rh);ctx.fillRect(0,y,x,rh);ctx.fillRect(x+rw,y,w-x-rw,rh);
 ctx.lineWidth=Math.max(2,w/220);ctx.strokeStyle='#facc66';ctx.fillStyle='#facc66';ctx.strokeRect(x,y,rw,rh);ctx.fillText('ZÄHLBEREICH',x+4,Math.max(18,y-7));
 for(const [i,m] of [...masks,...(editing==='mask'&&draft?[draft]:[])].entries()){ctx.fillStyle='rgba(239,68,68,.25)';ctx.strokeStyle='#ff7777';ctx.fillRect(m.x*w,m.y*h,m.w*w,m.h*h);ctx.strokeRect(m.x*w,m.y*h,m.w*w,m.h*h);ctx.fillStyle='#ffaaaa';ctx.fillText('IGNORIEREN '+(i+1),m.x*w+4,Math.max(18,m.y*h-5));}
+if($('showWood').checked&&!editing){ctx.strokeStyle='#78caff';ctx.fillStyle='#78caff';ctx.lineWidth=Math.max(2,w/250);for(const b of stockBoxes){ctx.strokeRect(b.x*w,b.y*h,b.w*w,b.h*h);}}
 if(track){const b=track.box;ctx.strokeStyle=track.rejected?'#ff7777':track.confirmed?'#60e3a1':'#facc66';ctx.fillStyle=ctx.strokeStyle;ctx.lineWidth=Math.max(3,w/170);ctx.strokeRect(b.x*w,b.y*h,b.w*w,b.h*h);ctx.fillText('ID '+track.id,b.x*w+4,Math.max(20,b.y*h-8));}
 if(performance.now()<flashUntil){ctx.fillStyle='#60e3a1';ctx.font=`bold ${w/9}px system-ui`;ctx.fillText('+1',w*.76,h*.19);}}
 
@@ -89,6 +94,28 @@ function detectMotion(p,prev,w,h,threshold,minFraction,maxBoxFraction,allowed=nu
  candidates.sort((a,b)=>b.n-a.n);
  return {fraction,box:candidates[0]||null,oversized,largest,active:!!candidates.length||oversized,ignored:changed>=minPixels&&!candidates.length};
 }
+// Classical color segmentation; no model or inferred object identity.
+function woodStock(p,w,h,allowed){
+ const n=w*h, mask=new Uint8Array(n), seen=new Uint8Array(n), queue=new Int32Array(n);let valid=0,pixels=0;const boxes=[];
+ for(let k=0;k<n;k++){if(allowed&&!allowed[k])continue;valid++;const i=k*4,r=p[i],g=p[i+1],b=p[i+2];const d=r-b;
+  // Warm wood: yellow/orange hue and sufficient brightness/chroma.
+  if(r>=95&&r>=g&&g>=b&&d>=24&&g-b>=12&&r-g>=3&&d/r>=.16&&(g-b)/d>=.26&&(g-b)/d<=.93)mask[k]=1;
+ }
+ const minPixels=Math.max(8,Math.ceil(valid*.0007));
+ for(let k=0;k<n;k++){if(!mask[k]||seen[k])continue;let head=0,tail=1,l=w,r=0,t=h,b=0;queue[0]=k;seen[k]=1;
+  while(head<tail){const q=queue[head++],x=q%w,y=Math.floor(q/w);l=Math.min(l,x);r=Math.max(r,x);t=Math.min(t,y);b=Math.max(b,y);
+   for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){if(!dx&&!dy)continue;const xx=x+dx,yy=y+dy;if(xx<0||xx>=w||yy<0||yy>=h)continue;const j=yy*w+xx;if(mask[j]&&!seen[j]){seen[j]=1;queue[tail++]=j;}}
+  }
+  if(tail<minPixels)continue;pixels+=tail;const bw=r-l+1,bh=b-t+1;
+  if(bw*bh<=n*.18&&tail/(bw*bh)>=.20)boxes.push({l,t,r,b});
+ }
+ return {pixels,valid,fraction:pixels/Math.max(1,valid),boxes};
+}
+function rememberStock(p,w,h,allowed,x,y,sw,sh){
+ const next=woodStock(p,w,h,allowed);stock=next;stockBoxes=next.boxes.map(b=>({x:(x+b.l)/sw,y:(y+b.t)/sh,w:(b.r-b.l+1)/sw,h:(b.b-b.t+1)/sh}));
+ $('stockInfo').textContent=`Sichtbare Holzfarbe: ${(next.fraction*100).toFixed(2)} % · ${stockBoxes.length} Farbbereiche (keine Stückzahl)`;return next;
+}
+function stockDecision(before,after,minGain){return !before||!after?null:after.fraction-before.fraction>=minGain;}
 // A single oversized local frame can be a bouncing part. Persistent oversized or global movement is rejected.
 function updateFilters(e,r,now,maxTime){
  if(r.global)e.reasons.add('großflächige Bewegung');
@@ -99,12 +126,12 @@ function updateFilters(e,r,now,maxTime){
 function eventSummary(e){return `Letzte Bewegung: ${Math.round(e.last-e.start)} ms · max. Fläche ${(e.peak*100).toFixed(1)} % · max. Rahmen ${(e.largest*100).toFixed(1)} % · große Bilder in Folge ${e.maxBadFrames}`;}
 function loop(now){if(!stream)return;raf=requestAnimationFrame(loop);if(v.readyState<2||v.currentTime===lastFrame)return;lastFrame=v.currentTime;
  if(!running){draw();return;}const sw=sample.width,sh=sample.height;if(!sw||!sh)return;sc.drawImage(v,0,0,sw,sh);const {x,y,w,h,allowed}=regionInfo(sw,sh);const p=sc.getImageData(x,y,w,h).data;
- if(!previous||previous.length!==p.length||now<warmUntil){previous=p;draw();return;}
+ if(!previous||previous.length!==p.length||now<warmUntil){previous=p;rememberStock(p,w,h,allowed,x,y,sw,sh);draw();return;}
  const threshold=65-Number($('sensitivity').value)*.55,min=Number($('area').value)/100,quiet=Number($('cooldown').value),maxTime=Number($('maxTime').value);const result=detectMotion(p,previous,w,h,threshold,min,Number($('maxBox').value)/100,allowed,Number($('maxMotion').value)/100);previous=p;
  $('meter').style.width=Math.min(100,result.fraction/Math.max(min,.0001)*50)+'%';
  const active=result.active||result.global||result.oversized;
  if(active){
-   if(!event){event={id:nextId++,start:now,last:now,seen:false,reasons:new Set(),box:null,peak:0,largest:0,badFrames:0,maxBadFrames:0};track=null;}
+   if(!event){event={baseline:stock,id:nextId++,start:now,last:now,seen:false,reasons:new Set(),box:null,peak:0,largest:0,badFrames:0,maxBadFrames:0};track=null;}
    event.last=now;event.peak=Math.max(event.peak,result.fraction);event.largest=Math.max(event.largest,result.largest||0);
    if(result.box){const b=result.box;event.seen=true;event.box={x:(x+b.l)/sw,y:(y+b.t)/sh,w:(b.r-b.l+1)/sw,h:(b.b-b.t+1)/sh};}
    updateFilters(event,result,now,maxTime);
@@ -113,12 +140,15 @@ function loop(now){if(!stream)return;raf=requestAnimationFrame(loop);if(v.readyS
    status(rejected?'Ignoriert: '+[...event.reasons].join(' / '):'Bewegung wird geprüft …',rejected?'warn':'');
    $('eventInfo').textContent=eventSummary(event);
  }else if(event&&now-event.last>=quiet){
+   const after=rememberStock(p,w,h,allowed,x,y,sw,sh), before=event.baseline;
+   const gain=before?after.fraction-before.fraction:0;
+   if($('stockGuard').checked&&stockDecision(before,after,Number($('woodGain').value)/100)!==true){event.reasons.add('kein ausreichender neuer Holzanteil');}
    const rejected=event.reasons.size>0;
    if(event.seen&&!rejected){setCount(count+1);flashUntil=now+300;beep();track={id:event.id,box:event.box,confirmed:true};status('Teil erkannt · +1','ok');}
    else{track=null;status('Ignoriert: '+([...event.reasons].join(' / ')||'kein kompakter Kandidat'),'warn');}
-   $('eventInfo').textContent=eventSummary(event)+(event.seen&&!rejected?' · Gezählt':' · Nicht gezählt');
+   $('eventInfo').textContent=eventSummary(event)+` · Holz-Zuwachs ${(gain*100).toFixed(2)} %`+(event.seen&&!rejected?' · Gezählt':' · Nicht gezählt');
    event=null;
- }else if(!event&&now>=flashUntil){track=null;}
+ }else if(!event&&now>=flashUntil){track=null;if(!stock||now-lastMotion>700){rememberStock(p,w,h,allowed,x,y,sw,sh);lastMotion=now;}}
  $('motion').textContent=`Bewegung: ${(result.fraction*100).toFixed(2).replace('.',',')} % · ${event?(event.reasons.size?'verworfen':'Prüfung läuft'):'bereit'}`;
  draw();$('stage').classList.toggle('flash',now<flashUntil);
 }
@@ -137,6 +167,6 @@ function geometryChanged(){running=false;calibrated=false;invalidateZone();zoneH
 $('clearMasks').onclick=()=>{masks=[];geometryChanged();};$('fullRoi').onclick=()=>{roi={x:0,y:0,w:1,h:1};geometryChanged();};
 $('pause').onclick=()=>{unlockAudio();running=!running;clearTracking();if(running)warmUntil=performance.now()+350;status(running?'Tracking aktiv':'Zählung pausiert',running?'ok':'');controls();};
 v.addEventListener('resize',()=>{if(stream&&v.videoWidth&&v.videoHeight&&(overlay.width!==v.videoWidth||overlay.height!==v.videoHeight)){running=false;calibrated=false;resize();status('Kamerabild geändert – Zählbereich prüfen und Tracking starten','warn');controls();draw();}});$('camera').onclick=startCamera;$('stop').onclick=stopCamera;$('cal').onclick=beginCal;$('minus').onclick=()=>setCount(count-1);$('plus').onclick=()=>setCount(count+1);$('reset').onclick=()=>{if(count===0||confirm('Stückzahl wirklich auf 0 setzen?')){setCount(0);nextId=1;clearTracking();warmUntil=performance.now()+350;status(running?'Tracking aktiv – bereit':'Zähler zurückgesetzt',running?'ok':'');draw();}};
-for(const [id,fmt] of [['sensitivity',v=>v],['area',v=>Number(v).toFixed(2).replace('.',',')+' %'],['maxBox',v=>v+' %'],['cooldown',v=>v+' ms'],['maxMotion',v=>v+' %'],['maxTime',v=>v+' ms']]){$(id).oninput=()=>$(id+'Val').textContent=fmt($(id).value);}
+for(const [id,fmt] of [['sensitivity',v=>v],['area',v=>Number(v).toFixed(2).replace('.',',')+' %'],['maxBox',v=>v+' %'],['cooldown',v=>v+' ms'],['maxMotion',v=>v+' %'],['maxTime',v=>v+' ms'],['woodGain',v=>Number(v).toFixed(2).replace('.',',')+' %']]){$(id).oninput=()=>$(id+'Val').textContent=fmt($(id).value);}
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&running){running=false;calibrated=false;clearTracking();status('Nach Rückkehr bitte Tracking neu starten','warn');controls();}else if(!document.hidden)keepAwake();});window.addEventListener('pagehide',stopCamera);controls();
 </script></body></html>
